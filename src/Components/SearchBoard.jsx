@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import SearchItem from "./SearchItem";
+import axios from 'axios';
 
 const SearchBoard = ({ query }) => {
   const [articles, setArticles] = useState([]);
   const [isQueryEmpty, setIsQueryEmpty] = useState(false);
 
-  const apikey = import.meta.env.VITE_API_KEY;
+  const apikey = import.meta.env.VITE_API_KEY2;
 
   useEffect(() => {
     if (query.trim() === "") {
@@ -20,10 +21,9 @@ const SearchBoard = ({ query }) => {
 
     const fetchArticles = async () => {
       try {
-        let url = `https://newsapi.org/v2/everything?q=${query}&apiKey=${apikey}&language=en`;
-        const response = await fetch(url);
-        const data = await response.json();
-        setArticles(data.articles);
+        let url = `https://api.currentsapi.services/v1/search?country=in&keywords=${query}&apiKey=${apikey}`;
+        const response = await axios.get(url);
+        setArticles(response.data.news);
       } catch (error) {
         console.error("Error fetching articles:", error);
       }

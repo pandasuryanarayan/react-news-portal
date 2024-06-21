@@ -9,10 +9,10 @@ const NewsBoard = ({ category }) => {
   useEffect(() => {
     const fetchArticles = async () => {
       try {
-        const apikey = import.meta.env.VITE_API_KEY;
-        const url = `https://newsapi.org/v2/top-headlines?country=in&category=${category}&apiKey=${apikey}`;
+        const apikey = import.meta.env.VITE_API_KEY2;
+        const url = `https://api.currentsapi.services/v1/search?category=${category}&apiKey=${apikey}`;
         const response = await axios.get(url);
-        setArticles(response.data.articles);
+        setArticles(response.data.news);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -27,7 +27,7 @@ const NewsBoard = ({ category }) => {
       <h1 className="p-1 text-capitalize text-center" style={{color: "blue"}}>{category}</h1>
       <div className="d-flex justify-content-center flex-wrap">
         {articles.map((news, index) => (
-          <NewsItem key={index} title={news.title} description={news.description} src={news.urlToImage} url={news.url} />
+          <NewsItem key={index} title={news.title} description={news.description} src={news.image} url={news.url} />
         ))}
       </div>
     </div>
